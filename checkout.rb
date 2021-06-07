@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Checkout
   attr_accessor :items, :promotional_rules
 
@@ -15,6 +17,6 @@ class Checkout
 
     promotional_rules.each { |rule| base_price = rule.apply(items, base_price) }
 
-    return "£#{base_price.round(2)}"
+    "£#{base_price.round(2)}"
   end
 end

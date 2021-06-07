@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PromotionRule
   def apply(items, base_price)
     raise NotImplementedError
@@ -10,24 +12,26 @@ class PercentDiscount < PromotionRule
   def initialize(discount:, condition:)
     @discount = discount
     @condition = condition
+
+    super()
   end
 
-  def apply(items, base_price)
-    if base_price >= condition
-      return base_price - base_price * discount
-    end
+  def apply(_items, base_price)
+    return base_price - base_price * discount if base_price >= condition
 
-    return base_price
+    base_price
   end
 end
 
 class ProductDiscount < PromotionRule
-  attr_accessor :item_code, :count , :new_price
+  attr_accessor :item_code, :count, :new_price
 
-  def initialize(item_code:, count: , new_price: )
+  def initialize(item_code:, count:, new_price:)
     @item_code = item_code
     @count = count
     @new_price = new_price
+
+    super()
   end
 
   def apply(items, base_price)
@@ -38,6 +42,6 @@ class ProductDiscount < PromotionRule
       return base_price - discount
     end
 
-    return base_price
+    base_price
   end
 end
